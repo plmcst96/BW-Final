@@ -36,7 +36,7 @@ public class InvoiceService {
             updatedInvoice.setUuid(uuid);
             return invoiceDAO.save(updatedInvoice);
         } else {
-            return null; // Puoi gestire diversamente se l'elemento non esiste
+            return null; 
         }
     }
 
