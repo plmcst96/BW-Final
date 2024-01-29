@@ -43,6 +43,7 @@ public class AuthService {
         user.setPassword(bcrypt.encode(body.password()));
         user.setName(body.name());
         user.setSurname(body.surname());
+        user.setUsername(body.username());
         user.setEmail(body.email());
         user.setRole(Role.USER);
         return userDAO.save(user);
