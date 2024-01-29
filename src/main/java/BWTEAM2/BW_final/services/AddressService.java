@@ -13,6 +13,7 @@ import BWTEAM2.BW_final.payloads.AddressDTO;
 import BWTEAM2.BW_final.repositories.AddressRepo;
 
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -52,7 +53,22 @@ public class AddressService {
     }
 
 
+    public Address saveAddress(Address address) {
+        return address;
+    }
 
+    public List<Address> getAllAddresses() {
+        return null;
+    }
 
+    public Address getAddressById(Long id) {
+        return null;
+    }
 
+    public List<Address> getAddressesByTown(Long townId) {
+        return null;
+    }
+
+    public void deleteAddress(Long id) {
+    }
 }
