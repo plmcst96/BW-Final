@@ -24,11 +24,19 @@ public class CSVController {
             String line;
             reader.readLine();
             while((line = reader.readLine()) != null){// legge riga per riga
-                String[] data = line.split("\n"); // ogni riga è separata da uno spazio
-                // query di inserimento dati
-                String sql = "INSERT INTO towns (province_code, municipal_serial_num, name, province) VALUES (?, ?, ?, ?) ";
-                jdbcTemplate.update(sql, data[0], data[1], data[2], data[3]);
+                String[] data = line.split(";"); // ogni riga è separata da uno spazio
+                if(data.length >= 4) {
+                    String provinceCode = data[0];
+                    String municipalSerialNum = data[1];
+                    String name = data[2];
+                    String province = data[3];
 
+                    // query di inserimento dati
+                    String sql = "INSERT INTO towns (province_code, municipal_serial_num, name, province_name) VALUES (?, ?, ?, ?) ";
+                    jdbcTemplate.update(sql, provinceCode, municipalSerialNum, name, province);
+                }else{
+                    System.out.println("Riga non valida " + line);
+                }
             }
             return "File importato con successo";
         } catch (IOException e){
@@ -44,11 +52,19 @@ public class CSVController {
             String line;
             reader.readLine();
             while((line = reader.readLine()) != null){// legge riga per riga
-                String[] data = line.split("\n"); // ogni riga è separata da uno spazio
-                // query di inserimento dati
-                String sql = "INSERT INTO provinces (province_code, name, region) VALUES (?, ?, ?) ";
-                jdbcTemplate.update(sql, data[0], data[1], data[2]);
+                String[] data = line.split(";"); // ogni riga è separata da uno spazio
+                if(data.length >= 3) {
+                    String provinceCode = data[0];
+                    String name = data[1];
+                    String region = data[2];
 
+
+                    // query di inserimento dati
+                    String sql = "INSERT INTO provinces (province_code, province_name, region) VALUES (?, ?, ?) ";
+                    jdbcTemplate.update(sql, provinceCode, name ,region );
+                }else{
+                    System.out.println("Riga non valida " + line);
+                }
             }
             return "File importato con successo";
         } catch (IOException e){

@@ -17,15 +17,14 @@ import java.util.UUID;
 public class Province {
 
     @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private UUID uuid;
+    @Column(name = "province_name")
+    private String name;
     @Column(name = "province_code")
     private String provinceCode;
-    private String name;
+
     private String region;
-    @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
+    /*@OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<Town> towns;
+    private List<Town> towns;*/
 }
