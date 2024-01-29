@@ -1,6 +1,7 @@
 package BWTEAM2.BW_final.security;
 
 import BWTEAM2.BW_final.entities.User;
+import BWTEAM2.BW_final.exception.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
