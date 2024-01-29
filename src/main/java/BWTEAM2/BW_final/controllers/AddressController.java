@@ -1,9 +1,9 @@
-package controller;
+package BWTEAM2.BW_final.controllers;
 
 import BWTEAM2.BW_final.entities.Address;
 import  org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import services.AddressService;
+import BWTEAM2.BW_final.services.AddressService;
 
 import java.util.List;
 
