@@ -1,6 +1,7 @@
 package BWTEAM2.BW_final.services;
 
 import BWTEAM2.BW_final.entities.Town;
+import BWTEAM2.BW_final.exception.NotFoundException;
 import BWTEAM2.BW_final.repositories.TownDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,9 +17,9 @@ public class TownService {
     @Autowired
     private TownDAO townDAO;
 
-   /* public Town findById(UUID id){
+    public Town findById(UUID id){
         return townDAO.findById(id).orElseThrow(()-> new NotFoundException(id));
-    }*/
+    }
 
     public Page<Town> findAllTown(int page, int size, String orderBy){
         if(size >= 50) size = 50;

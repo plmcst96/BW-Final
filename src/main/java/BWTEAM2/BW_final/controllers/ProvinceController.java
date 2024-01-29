@@ -4,10 +4,9 @@ import BWTEAM2.BW_final.entities.Province;
 import BWTEAM2.BW_final.services.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/provinces")
@@ -15,10 +14,10 @@ public class ProvinceController {
     @Autowired
     private ProvinceService provinceService;
 
-   /* @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public Province findProvinceById(@PathVariable UUID id){
         return provinceService.findById(id);
-    }*/
+    }
 
     @GetMapping
     public Page<Province> findAllProvinces(@RequestParam(defaultValue = "0") int page,

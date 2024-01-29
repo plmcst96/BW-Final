@@ -14,10 +14,10 @@ public class TownController {
     @Autowired
     private TownService townService;
 
-   /* @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public Town findTownById(@PathVariable UUID id){
         return townService.findById(id);
-    }*/
+    }
 
     @GetMapping
     public Page<Town> findAllTown(@RequestParam(defaultValue = "0") int page,
