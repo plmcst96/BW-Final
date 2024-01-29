@@ -20,6 +20,8 @@ public class InvoiceDTO {
     @NotNull
     private UUID clientId;
 
+
+
     public LocalDate getDate() {
         return date;
     }
@@ -59,5 +61,7 @@ public class InvoiceDTO {
     public void setClientId(UUID clientId) {
         this.clientId = clientId;
     }
+
+
 }
 
