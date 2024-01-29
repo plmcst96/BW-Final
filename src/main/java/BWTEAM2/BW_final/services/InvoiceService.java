@@ -2,6 +2,8 @@ package BWTEAM2.BW_final.services;
 
 import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.entities.Invoice;
+import BWTEAM2.BW_final.exception.NotFoundException;
+import BWTEAM2.BW_final.payloads.invoice.InvoiceDTO;
 import BWTEAM2.BW_final.repositories.InvoiceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
