@@ -27,5 +27,8 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "town_id")
     private Town town;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
 }
