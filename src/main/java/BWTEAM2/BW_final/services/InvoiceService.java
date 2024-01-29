@@ -21,6 +21,7 @@ public class InvoiceService {
     @Autowired
     InvoiceDAO invoiceDAO;
 
+
     public List<Invoice> getAllInvoices() {
         return invoiceDAO.findAll();
     }
