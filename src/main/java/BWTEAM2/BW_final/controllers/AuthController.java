@@ -1,4 +1,4 @@
-package BWTEAM2.BW_final.controller;
+package BWTEAM2.BW_final.controllers;
 
 import BWTEAM2.BW_final.entities.User;
 import BWTEAM2.BW_final.exception.BadRequestException;
