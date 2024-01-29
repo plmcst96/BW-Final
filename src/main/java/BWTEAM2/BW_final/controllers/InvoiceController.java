@@ -1,6 +1,7 @@
 package BWTEAM2.BW_final.controllers;
 
 import BWTEAM2.BW_final.entities.Invoice;
+import BWTEAM2.BW_final.payloads.invoice.InvoiceDTO;
 import BWTEAM2.BW_final.repositories.InvoiceDAO;
 import BWTEAM2.BW_final.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +41,16 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice newInvoice) {
+    public ResponseEntity<Invoice> createInvoice(@RequestBody InvoiceDTO newInvoice) {
         Invoice savedInvoice = invoiceService.saveInvoice(newInvoice);
         return ResponseEntity.ok(savedInvoice);
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<Invoice> updateInvoice(@PathVariable UUID uuid, @RequestBody Invoice updatedInvoice) {
+    public ResponseEntity<Invoice> updateInvoice(@PathVariable UUID uuid, @RequestBody InvoiceDTO updatedInvoice) {
         Invoice existingInvoice = invoiceDAO.findById(uuid).orElse(null);
         if (existingInvoice != null) {
-            updatedInvoice.setUuid(uuid);
+            existingInvoice.setUuid(uuid);
             Invoice savedInvoice = invoiceService.saveInvoice(updatedInvoice);
             return ResponseEntity.ok(savedInvoice);
         } else {
