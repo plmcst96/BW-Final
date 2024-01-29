@@ -17,20 +17,21 @@ import java.util.UUID;
 public class Town {
 
     @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private UUID uuid;
-    @Column(name = "province_code")
-    private int provinceCode;
     @Column(name = "municipal_serial_num")
-    private int municipalSerialNumber;
+    private String municipalSerialNumber;
+    @Column(name = "name")
     private String name;
+    @Column(name = "province_code")
+    private String provinceCode;
+    private String province_name;
+   /* @ManyToOne
+   @JoinColumn(name = "province_name")
+    private Province province;*/
+
     @OneToMany(mappedBy = "town", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
     private List<Address> addresses;
-    @ManyToOne
-    @JoinColumn(name = "province_id")
-    private Province province;
+
 
 }
