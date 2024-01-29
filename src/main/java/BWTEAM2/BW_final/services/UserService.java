@@ -45,5 +45,18 @@ public class UserService {
         return userDAO.save(user);
     }
 
+    public User setAdmin(UUID id) {
+        User user = userDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
+        user.setRole(Role.ADMIN);
+        return userDAO.save(user);
+    }
+
+    public User setUser(UUID id) {
+        User user = userDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
+        user.setRole(Role.USER);
+        return userDAO.save(user);
+    }
+
+
 
 }

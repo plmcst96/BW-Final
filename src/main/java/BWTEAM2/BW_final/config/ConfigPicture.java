@@ -1,4 +1,4 @@
-/*
+
 package BWTEAM2.BW_final.config;
 
 import com.cloudinary.Cloudinary;
@@ -23,4 +23,4 @@ public class ConfigPicture {
         return new Cloudinary(config);
     }
 }
-*/
+
