@@ -1,4 +1,4 @@
-package BWTEAM2.BW_final.controllers;
+package BWTEAM2.BW_final.controller;
 
 import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.services.ClientsService;

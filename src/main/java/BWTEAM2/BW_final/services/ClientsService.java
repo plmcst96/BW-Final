@@ -54,6 +54,7 @@ public class ClientsService {
         return clientsDAO.findAll(pageable);
     }
 
+
 /*
     public Client findById(UUID id) {
         return clientsDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
@@ -77,7 +78,7 @@ public class ClientsService {
 /*    public Client findByEmail(String email) throws NotFoundException
     {
         System.out.println(clientsDAO.findByEmail(email));
-        return clientsDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovata!"));
+        return clientsDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Client with email " + email + " not found!"));
     }*/
 
 
