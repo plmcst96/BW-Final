@@ -1,4 +1,4 @@
-package BWTEAM2.BW_final.payloads;
+package BWTEAM2.BW_final.payloads.client;
 
 import BWTEAM2.BW_final.entities.ClientType;
 import jakarta.persistence.Column;
@@ -11,16 +11,16 @@ public record NewClientDTO(
         @Size(min = 3, max = 30, message = "The business name must have a minimum of 3 characters and a maximum of 30.")
         String businessName,
         @NotEmpty(message = "VAT number cannot be empty.")
-        @Size(min = 11, max = 11, message = "The VAT number must have a minimum of 11 characters")
+        @Size(min = 10, max = 11, message = "The VAT number must have a minimum of 11 characters")
         String VATNumber,
         @NotEmpty(message = "Email cannot be empty.")
-        @Email(message = "Insert a valid email")
+         @Email(message = "Insert a valid email")
         String email,
         @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Date format must be: yyyy-mm-dd")
         String inputDate,
         @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Date format must be: yyyy-mm-dd")
         String lastContactDate,
-        @NotBlank
+        @Min(value = 1)
         long annualRevenue,
         @NotEmpty(message = "Email cannot be empty.")
 
@@ -42,7 +42,7 @@ public record NewClientDTO(
         @NotEmpty(message = "Surname cannot be empty.")
         @Size(min = 3, max = 20, message = "The surname must have a minimum of 3 characters and a maximum of 20.")
         String surname,
-        @NotEmpty(message = "Surname cannot be empty.")
+        @NotEmpty(message = "Client type cannot be empty.")
         String clientType
 ) {
 }

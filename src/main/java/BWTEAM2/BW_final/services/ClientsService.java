@@ -3,9 +3,9 @@ package BWTEAM2.BW_final.services;
 
 import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.entities.ClientType;
-import BWTEAM2.BW_final.payloads.NewClientDTO;
+import BWTEAM2.BW_final.exception.NotFoundException;
+import BWTEAM2.BW_final.payloads.client.NewClientDTO;
 import BWTEAM2.BW_final.repositories.ClientsDAO;
-import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +22,7 @@ public class ClientsService {
 
     @Autowired
     ClientsDAO clientsDAO;
+
 
     public Client save(NewClientDTO body) {
         Client client = new Client();
@@ -55,31 +56,30 @@ public class ClientsService {
     }
 
 
-/*
     public Client findById(UUID id) {
         return clientsDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
-*/
 
-/*    public Client findByIdAndUpdate(UUID uuid, Client body) {
+   public Client findByIdAndUpdate(UUID uuid, NewClientDTO body) {
         Client found = this.findById(uuid);
-        found.setBusinessName(body.getBusinessName());
-        found.setName(body.getName());
-        found.setSurname(body.getSurname());
-        found.setClientType(body.getClientType());
-        found.setEmail(body.getEmail());
+        found.setBusinessName(body.businessName());
+        found.setName(body.name());
+        found.setSurname(body.surname());
+        found.setClientType(ClientType.valueOf(body.clientType().toUpperCase()));
+        found.setEmail(body.email());
         return clientsDAO.save(found);
     }
 
     public void deleteById(UUID uuid) {
         Client found = this.findById(uuid);
         clientsDAO.delete(found);
-    }*/
-/*    public Client findByEmail(String email) throws NotFoundException
+    }
+
+   public Client findByEmail(String email) throws NotFoundException
     {
         System.out.println(clientsDAO.findByEmail(email));
         return clientsDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Client with email " + email + " not found!"));
-    }*/
+    }
 
 
 }

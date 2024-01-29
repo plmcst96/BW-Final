@@ -1,13 +1,18 @@
 package BWTEAM2.BW_final.controllers;
 
 import BWTEAM2.BW_final.entities.Client;
+import BWTEAM2.BW_final.exception.BadRequestException;
+import BWTEAM2.BW_final.payloads.client.ClientResponseDTO;
+import BWTEAM2.BW_final.payloads.client.NewClientDTO;
 import BWTEAM2.BW_final.services.ClientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/clients")
@@ -18,7 +23,36 @@ public class ClientsController {
     @GetMapping
     public Page<Client> getClients(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size,
-                                  @RequestParam(defaultValue = "id") String sort) {
+                                  @RequestParam(defaultValue = "uuid") String sort) {
         return clientsService.getClients(page, size, sort);
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ClientResponseDTO create(@RequestBody @Validated NewClientDTO device, BindingResult validation) {
+        if(validation.hasErrors()) {
+            System.out.println(validation.getAllErrors());
+            throw new BadRequestException("Something is wrong in the payload.");
+        } else {
+            Client newDevice = clientsService.save(device);
+            return new ClientResponseDTO(newDevice.getUuid());
+        }
+    }
+
+    @PutMapping("/{id}")
+    Client updateById(@PathVariable UUID id, @RequestBody NewClientDTO body) {
+        return clientsService.findByIdAndUpdate(id, body);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable UUID id) {
+        clientsService.deleteById(id);
+    }
+
+    @GetMapping("/{id}")
+    public Client getClientById(@PathVariable UUID id) {
+        return clientsService.findById(id);
+    }
+
 }

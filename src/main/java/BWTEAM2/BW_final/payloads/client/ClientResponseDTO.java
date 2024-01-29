@@ -1,4 +1,4 @@
-package BWTEAM2.BW_final.payloads;
+package BWTEAM2.BW_final.payloads.client;
 
 import java.util.UUID;
 
