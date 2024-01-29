@@ -7,8 +7,9 @@ import kong.unirest.Unirest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 public class EmailSender {
 
     private String mailgunApiKey;
@@ -20,7 +21,7 @@ public class EmailSender {
         this.mailgunDomainname = mailgunDomainName;
     }
 
-    @Bean
+
     public void sendRegistrationEmail(User recipient) {
 
         HttpResponse<JsonNode> response = Unirest.post("https://api.mailgun.net/v3/" + this.mailgunDomainname + "/messages")
