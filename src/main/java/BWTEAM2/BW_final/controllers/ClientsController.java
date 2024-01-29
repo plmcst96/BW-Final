@@ -18,7 +18,7 @@ public class ClientsController {
     @GetMapping
     public Page<Client> getClients(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size,
-                                  @RequestParam(defaultValue = "id") String sort) {
+                                  @RequestParam(defaultValue = "uuid") String sort) {
         return clientsService.getClients(page, size, sort);
     }
 }
