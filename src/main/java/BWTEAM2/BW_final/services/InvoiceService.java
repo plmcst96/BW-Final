@@ -20,6 +20,8 @@ public class InvoiceService {
 
     @Autowired
     InvoiceDAO invoiceDAO;
+    @Autowired
+    ClientsService clientsService;
 
 
     public List<Invoice> getAllInvoices() {
@@ -36,7 +38,7 @@ public class InvoiceService {
         invoice.setAmount(body.getAmount());
         invoice.setNumber(body.getNumber());
         invoice.setInvoiceState(body.getInvoiceState());
-        Client client = clientService.getClientById(body.getClientId());
+        Client client = clientsService.findById(body.getClientId());
         invoice.setClient(client);
         return invoiceDAO.save(invoice);
     }
@@ -52,7 +54,7 @@ public class InvoiceService {
         invoice.setAmount(body.getAmount());
         invoice.setNumber(body.getNumber());
         invoice.setInvoiceState(body.getInvoiceState());
-        Client client = clientService.getClientById(body.getClientId());
+        Client client = clientsService.findById(body.getClientId());
         invoice.setClient(client);
         return invoiceDAO.save(invoice);
     }

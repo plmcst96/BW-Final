@@ -1,4 +1,5 @@
 package BWTEAM2.BW_final.payloads.invoice;
+import BWTEAM2.BW_final.entities.InvoiceState;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -46,7 +47,7 @@ public class InvoiceDTO {
         this.number = number;
     }
 
-    public String getInvoiceState() {
+    public InvoiceState getInvoiceState() {
         return invoiceState;
     }
 
