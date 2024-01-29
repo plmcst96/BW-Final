@@ -3,7 +3,6 @@ package BWTEAM2.BW_final.services;
 import BWTEAM2.BW_final.entities.Town;
 import BWTEAM2.BW_final.repositories.TownDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +20,7 @@ public class TownService {
         return townDAO.findById(id).orElseThrow(()-> new NotFoundException(id));
     }*/
 
-    public Page<Town> findAllDevices(int page, int size, String orderBy){
+    public Page<Town> findAllTown(int page, int size, String orderBy){
         if(size >= 50) size = 50;
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return townDAO.findAll(pageable);
