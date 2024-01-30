@@ -26,7 +26,9 @@ public interface InvoiceDAO extends JpaRepository<Invoice, UUID> {
     public Page<Invoice> findByDate(LocalDate date, Pageable pageable);
 
     @Query("SELECT i FROM Invoice i WHERE i.amount BETWEEN :minAmount AND :maxAmount")
-    List<Invoice> findInvoicesByAmountRange(@Param("minAmount") double minAmount, @Param("maxAmount") double maxAmount);
+     public Page<Invoice> findInvoicesByAmountRange(@Param("minAmount") double minAmount, @Param("maxAmount") double maxAmount, Pageable pageable);
+
+    public Page<Invoice> findInvoiceByYear(int year, Pageable pageable);
 
 
 }

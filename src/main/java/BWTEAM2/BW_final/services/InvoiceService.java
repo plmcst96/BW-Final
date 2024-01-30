@@ -66,8 +66,9 @@ public class InvoiceService {
         invoiceDAO.delete(invoice);
     }
 
-    public List<Invoice> findInvoicesByAmountRange(double minAmount, double maxAmount) {
-        return invoiceDAO.findInvoicesByAmountRange(minAmount, maxAmount);
+    public Page<Invoice> findInvoicesByAmountRange(double minAmount, double maxAmount, int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return invoiceDAO.findInvoicesByAmountRange(minAmount, maxAmount, pageable);
     }
 
     public Page<Invoice> findByInvoiceState(int page, int size, String orderBy, InvoiceState invoiceState){
