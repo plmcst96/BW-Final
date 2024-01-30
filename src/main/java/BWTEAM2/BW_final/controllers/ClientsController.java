@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,11 @@ import java.util.UUID;
 public class ClientsController {
     @Autowired
     ClientsService clientsService;
-    
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ClientResponseDTO create(@RequestBody @Validated NewClientDTO device, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
@@ -36,12 +38,14 @@ public class ClientsController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     Client updateById(@PathVariable UUID id, @RequestBody NewClientDTO body) {
         return clientsService.findByIdAndUpdate(id, body);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteById(@PathVariable UUID id) {
         clientsService.deleteById(id);
     }

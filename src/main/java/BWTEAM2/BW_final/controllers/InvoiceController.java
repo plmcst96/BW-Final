@@ -41,6 +41,7 @@ public class InvoiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public InvoiceResponseDTO create(@RequestBody @Validated InvoiceDTO invoice, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
@@ -52,11 +53,13 @@ public class InvoiceController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     Invoice updateById(@PathVariable UUID id, @RequestBody InvoiceDTO body) {
         return invoiceService.updateInvoiceById(id, body);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable UUID id) {
         invoiceService.deleteInvoiceById(id);
@@ -71,7 +74,6 @@ public class InvoiceController {
 
     //Filtri custom
     @GetMapping("/filters/date")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public Page<Invoice> findByDate(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam(defaultValue = "uuid") String sort,
@@ -79,7 +81,6 @@ public class InvoiceController {
         return invoiceService.findByDate(page, size, sort, date);
     }
     @GetMapping("/filters/invoice-state")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public Page<Invoice> findByInvoiceState(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam(defaultValue = "uuid") String sort,
@@ -88,7 +89,6 @@ public class InvoiceController {
     }
 
     @GetMapping("/filters/client")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public Page<Invoice> findByClient(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam(defaultValue = "uuid") String sort,
@@ -97,7 +97,6 @@ public class InvoiceController {
     }
 
     @GetMapping("/filters/amount-range")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public Page<Invoice> findByAmountRange(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam(defaultValue = "uuid") String sort,
@@ -106,7 +105,6 @@ public class InvoiceController {
     }
 
     @GetMapping("/filters")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public Page<Invoice> findByYear(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam(defaultValue = "uuid") String sort,

@@ -7,6 +7,7 @@ import BWTEAM2.BW_final.payloads.address.AddressResponseDTO;
 import  org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,21 +34,21 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Address getAddressByIdAndUpdate(@PathVariable UUID id, @RequestBody AddressDTO addressPayload) {
         return addressService.updateById(id, addressPayload);
     }
 
     @DeleteMapping("/{id}")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void getAddressByIdAndDelete(@PathVariable UUID id) {
         addressService.deleteById(id);
     }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    // @PreAuthorize("hasAuthority('ADMIN')")
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     public AddressResponseDTO create(@RequestBody @Validated AddressDTO address, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
