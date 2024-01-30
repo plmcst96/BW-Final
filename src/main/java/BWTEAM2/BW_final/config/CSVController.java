@@ -40,14 +40,18 @@ public class CSVController {
                     String municipalSerialNum = data[1];
                     String name = data[2];
                     String provinceName = data[3];
-                    if(provinceName.equals("Bolzano/Bozen")&& provinceCode.equals("021")){
-                        provinceName = "Bolzano";
-                        provinceCode = "021";
-                    }
-                    System.out.println(provinceName);
 
                     //controlla se la provincia esiste nel DB
-                    Optional<Province> provinceDB =provinceDAO.findByName(provinceName);
+                    Optional<Province> provinceDB;
+                    if(provinceName.equals("Bolzano")){
+                        provinceDB = provinceDAO.findByName("Bolzano/Bozen");
+                       System.out.println("Bolzano: " + provinceDB);
+                    }else{
+                       provinceDB = provinceDAO.findByName(provinceName);
+                    }
+                    //System.out.println(provinceName);
+
+
                     //System.out.println(provinceDB);
                     if(provinceDB.isPresent()){
                         // crea istanza di Town
@@ -56,12 +60,11 @@ public class CSVController {
                         town.setName(name);
                         town.setProvinceCode(provinceCode);
                         town.setProvince(provinceDB.get());
+
+
+
                         townDAO.save(town);
-
-
-                        // query di inserimento dati
-                        //String sql = "INSERT INTO towns (province_code, municipal_serial_num, name) VALUES (?, ?, ?) ";
-                        //jdbcTemplate.update(sql, provinceCode, municipalSerialNum, name);
+                        System.out.println("*******" + town);
 
                     }else{
                         System.out.println("Provincia con nome " + provinceName + " non trovata!");
@@ -105,22 +108,43 @@ public class CSVController {
                     }else if(name.equals("Olbia Tempio")){
                         province.setName("Sassari");
                         province.setProvinceCode("SS");
+                    } else if(name.equals("Bolzano")){
+                        province.setName("Bolzano/Bozen");
+                        province.setProvinceCode("BZ");
+                    } else if(name.equals("Verbania")) {
+                        province.setName("Verbano-Cusio-Ossola");
+                        province.setProvinceCode("VCO");
+                    }else if(name.equals("Aosta")){
+                        province.setName("Valle d'Aosta/Vallée d'Aoste");
+                        province.setProvinceCode("AO");
+                    }else if(name.equals("Monza-Brianza")){
+                        province.setName("Monza e della Brianza");
+                        province.setProvinceCode("MB");
+                    }else if(name.equals("La-Spezia")){
+                        province.setName("La Spezia");
+                        province.setProvinceCode("SP");
+                    }else if(name.equals("Reggio-Emilia")){
+                        province.setName("Reggio nell'Emilia");
+                        province.setProvinceCode("RE");
+                    }else if(name.equals("Forli-Cesena")){
+                        province.setName("Forlì-Cesena");
+                        province.setProvinceCode("FC");
+                    }else if(name.equals("Pesaro-Urbino")) {
+                        province.setName("Pesaro e Urbino");
+                        province.setProvinceCode("PU");
+                    }else if(name.equals("Ascoli-Piceno")) {
+                        province.setName("Ascoli Piceno");
+                        province.setProvinceCode("AP");
+                    }else if(name.equals("Reggio-Calabria")) {
+                        province.setName("Reggio Calabria");
+                        province.setProvinceCode("RC");
+                    }else if(name.equals("Vibo-Valentia")) {
+                        province.setName("Vibo Valentia");
+                        province.setProvinceCode("VV");
                     }
 
-                    /*else if(name.equals("Bolzano")){
-                        province.setName("Bolzano/Bozen");
-                    }*/
 
-
-
-
-
-
-                    provinceDAO.save(province);
-
-                    // query di inserimento dati
-                   // String sql = "INSERT INTO provinces (province_code, province_name, region) VALUES (?, ?, ?) ";
-                    //jdbcTemplate.update(sql, provinceCode, name ,region );
+                            provinceDAO.save(province);
                 }else{
                     System.out.println("Riga non valida " + line);
                 }
