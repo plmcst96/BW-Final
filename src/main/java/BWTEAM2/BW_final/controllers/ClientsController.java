@@ -7,11 +7,13 @@ import BWTEAM2.BW_final.payloads.client.NewClientDTO;
 import BWTEAM2.BW_final.services.ClientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
@@ -19,13 +21,7 @@ import java.util.UUID;
 public class ClientsController {
     @Autowired
     ClientsService clientsService;
-
-    @GetMapping
-    public Page<Client> getClients(@RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(defaultValue = "10") int size,
-                                  @RequestParam(defaultValue = "uuid") String sort) {
-        return clientsService.getClients(page, size, sort);
-    }
+    
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -54,5 +50,21 @@ public class ClientsController {
     public Client getClientById(@PathVariable UUID id) {
         return clientsService.findById(id);
     }
+
+    @GetMapping
+    public Page<Client> getClients(
+            @RequestParam(required = false) Double minRevenue,
+            @RequestParam(required = false) Double maxRevenue,
+            @RequestParam(required = false, value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inputDate,
+            @RequestParam(required = false, value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastContactDate,
+            @RequestParam(required = false) String businessName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "uuid") String sort) {
+
+        return clientsService.getClientsByParams(minRevenue, maxRevenue, inputDate, lastContactDate, businessName, page,size,sort);
+    }
+
+
 
 }

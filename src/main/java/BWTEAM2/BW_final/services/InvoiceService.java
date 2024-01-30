@@ -27,8 +27,9 @@ public class InvoiceService {
     ClientsService clientsService;
 
 
-    public List<Invoice> getAllInvoices() {
-        return invoiceDAO.findAll();
+    public Page<Invoice> getAllInvoices(int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page,size, Sort.by(orderBy));
+        return invoiceDAO.findAll(pageable);
     }
 
     public Invoice getInvoiceById(UUID uuid) {

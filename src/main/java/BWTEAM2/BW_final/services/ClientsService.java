@@ -81,5 +81,11 @@ public class ClientsService {
         return clientsDAO.findByEmail(email).orElseThrow(() -> new NotFoundException("Client with email " + email + " not found!"));
     }
 
+    public Page<Client> getClientsByParams(Double minRevenue, Double maxRevenue, LocalDate inputDate, LocalDate lastContactDate, String businessName, int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page,size, Sort.by(orderBy));
+
+        return clientsDAO.findByParams(minRevenue, maxRevenue, inputDate, lastContactDate, businessName, pageable);
+    }
+
 
 }

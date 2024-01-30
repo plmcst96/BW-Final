@@ -114,7 +114,7 @@ public class CSVController {
                     }else if(name.equals("Olbia Tempio")){
                         province.setName("Sassari");
                         province.setProvinceCode("SS");
-                    } 
+                    }
                     
                             provinceDAO.save(province);
                 }else{
