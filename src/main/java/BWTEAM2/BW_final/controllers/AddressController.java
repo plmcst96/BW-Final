@@ -2,19 +2,16 @@ package BWTEAM2.BW_final.controllers;
 
 import BWTEAM2.BW_final.entities.Address;
 import BWTEAM2.BW_final.exception.BadRequestException;
-import BWTEAM2.BW_final.payloads.AddressDTO;
-import BWTEAM2.BW_final.payloads.AddressResponseDTO;
-import BWTEAM2.BW_final.repositories.AddressRepo;
+import BWTEAM2.BW_final.payloads.address.AddressDTO;
+import BWTEAM2.BW_final.payloads.address.AddressResponseDTO;
 import  org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import BWTEAM2.BW_final.services.AddressService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

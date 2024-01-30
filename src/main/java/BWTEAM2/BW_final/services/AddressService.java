@@ -9,11 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import BWTEAM2.BW_final.payloads.AddressDTO;
+import BWTEAM2.BW_final.payloads.address.AddressDTO;
 import BWTEAM2.BW_final.repositories.AddressRepo;
 
 
-import java.util.List;
 import java.util.UUID;
 
 
