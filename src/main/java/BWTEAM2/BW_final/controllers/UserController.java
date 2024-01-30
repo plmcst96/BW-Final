@@ -63,13 +63,13 @@ public class UserController {
         usersService.deleteById(userId);
     }
 
-    @GetMapping("/{id}/set-admin")
+    @GetMapping("/{uuid}/set-admin")
     @PreAuthorize("hasAuthority('ADMIN')")
     public User setAdmin(@PathVariable UUID id) {
         return usersService.setAdmin(id);
     }
 
-    @GetMapping("/{id}/set-user")
+    @GetMapping("/{uuid}/set-user")
     @PreAuthorize("hasAuthority('ADMIN')")
     public User setUser(@PathVariable UUID id) {
         return usersService.setUser(id);

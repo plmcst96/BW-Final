@@ -2,6 +2,7 @@ package BWTEAM2.BW_final.services;
 
 import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.entities.Invoice;
+import BWTEAM2.BW_final.entities.InvoiceState;
 import BWTEAM2.BW_final.exception.NotFoundException;
 import BWTEAM2.BW_final.payloads.invoice.InvoiceDTO;
 import BWTEAM2.BW_final.repositories.InvoiceDAO;
@@ -34,11 +35,11 @@ public class InvoiceService {
 
     public Invoice saveInvoice(InvoiceDTO body) {
         Invoice invoice = new Invoice();
-        invoice.setDate(body.getDate());
-        invoice.setAmount(body.getAmount());
-        invoice.setNumber(body.getNumber());
-        invoice.setInvoiceState(body.getInvoiceState());
-        Client client = clientsService.findById(body.getClientId());
+        invoice.setDate(body.date());
+        invoice.setAmount(body.amount());
+        invoice.setNumber(body.number());
+        invoice.setInvoiceState(InvoiceState.valueOf(body.invoiceState()));
+        Client client = clientsService.findById(body.clientId());
         invoice.setClient(client);
         return invoiceDAO.save(invoice);
     }
@@ -50,11 +51,11 @@ public class InvoiceService {
 
     public Invoice updateInvoiceById(UUID uuid, InvoiceDTO body) {
         Invoice invoice = invoiceDAO.findById(uuid).orElseThrow(() -> new NotFoundException(uuid));
-        invoice.setDate(body.getDate());
-        invoice.setAmount(body.getAmount());
-        invoice.setNumber(body.getNumber());
-        invoice.setInvoiceState(body.getInvoiceState());
-        Client client = clientsService.findById(body.getClientId());
+        invoice.setDate(body.date());
+        invoice.setAmount(body.amount());
+        invoice.setNumber(body.number());
+        invoice.setInvoiceState(InvoiceState.valueOf(body.invoiceState()));
+        Client client = clientsService.findById(body.clientId());
         invoice.setClient(client);
         return invoiceDAO.save(invoice);
     }
