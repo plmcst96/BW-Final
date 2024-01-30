@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -40,23 +41,27 @@ public class ClientsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientResponseDTO create(@RequestBody @Validated NewClientDTO device, BindingResult validation) {
+    // @PreAuthorize("hasAuthority('ADMIN')")
+
+    public ClientResponseDTO create(@RequestBody @Validated NewClientDTO client, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
             throw new BadRequestException("Something is wrong in the payload.");
         } else {
-            Client newDevice = clientsService.save(device);
-            return new ClientResponseDTO(newDevice.getUuid());
+            Client newClient = clientsService.save(client);
+            return new ClientResponseDTO(newClient.getUuid());
         }
     }
 
     @PutMapping("/{id}")
+   // @PreAuthorize("hasAuthority('ADMIN')")
     Client updateById(@PathVariable UUID id, @RequestBody NewClientDTO body) {
         return clientsService.findByIdAndUpdate(id, body);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    // @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteById(@PathVariable UUID id) {
         clientsService.deleteById(id);
     }
