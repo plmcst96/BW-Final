@@ -142,8 +142,7 @@ public class CSVController {
                         province.setName("Vibo Valentia");
                         province.setProvinceCode("VV");
                     }
-
-
+                    
                             provinceDAO.save(province);
                 }else{
                     System.out.println("Riga non valida " + line);
