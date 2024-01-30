@@ -23,7 +23,7 @@ public class Province {
     private String provinceCode;
 
     private String region;
-    /*@OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
+   /* @OneToMany(mappedBy = "province_name", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
     private List<Town> towns;*/

@@ -23,10 +23,10 @@ public class Town {
     private String name;
     @Column(name = "province_code")
     private String provinceCode;
-    private String province_name;
-   /* @ManyToOne
+
+   @ManyToOne
    @JoinColumn(name = "province_name")
-    private Province province;*/
+   private Province province;
 
     @OneToMany(mappedBy = "town", cascade = CascadeType.ALL)
     @JsonIgnore
