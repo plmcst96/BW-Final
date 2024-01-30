@@ -19,8 +19,9 @@ import java.util.UUID;
 
 @Service
 public class AddressService {
-@Autowired
+    @Autowired
     AddressRepo addressRepo;
+
     public Address save(AddressDTO body) {
         Address address = new Address();
         address.setStreet(body.street());
@@ -38,6 +39,7 @@ public class AddressService {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return addressRepo.findAll(pageable);
     }
+
     public Address updateById(UUID id, AddressDTO body) {
         Address address = addressRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
         address.setStreet(body.street());
@@ -53,22 +55,4 @@ public class AddressService {
     }
 
 
-    public Address saveAddress(Address address) {
-        return address;
-    }
-
-    public List<Address> getAllAddresses() {
-        return null;
-    }
-
-    public Address getAddressById(Long id) {
-        return null;
-    }
-
-    public List<Address> getAddressesByTown(Long townId) {
-        return null;
-    }
-
-    public void deleteAddress(Long id) {
-    }
 }
