@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,5 +64,25 @@ public class InvoiceService {
     public void deleteInvoiceById(UUID uuid) {
         Invoice invoice = invoiceDAO.findById(uuid).orElseThrow(() -> new NotFoundException(uuid));
         invoiceDAO.delete(invoice);
+    }
+
+    public List<Invoice> findInvoicesByAmountRange(double minAmount, double maxAmount) {
+        return invoiceDAO.findInvoicesByAmountRange(minAmount, maxAmount);
+    }
+
+    public Page<Invoice> findByInvoiceState(int page, int size, String orderBy, InvoiceState invoiceState){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return invoiceDAO.findByInvoiceState(invoiceState, pageable);
+    }
+
+    public Page<Invoice> findByClient(int page, int size, String orderBy, UUID uuid){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        Client client1 = clientsService.findById(uuid);
+        return invoiceDAO.findByClient(client1, pageable);
+    }
+
+    public Page<Invoice> findByDate(int page, int size, String orderBy, LocalDate date){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return  invoiceDAO.findByDate(date, pageable);
     }
 }
