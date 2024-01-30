@@ -46,6 +46,6 @@ public class JWTAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String servletPath = request.getServletPath();
-        return servletPath.startsWith("/auth/") ||  servletPath.startsWith("/uploadTown") || servletPath.startsWith("/uploadProvince");
+        return servletPath.startsWith("/auth/") ||  servletPath.startsWith("/uploadTown") || servletPath.startsWith("/uploadProvince") || servletPath.equals("/v3/api-docs.yaml") || servletPath.equals("/swagger-ui/index.html") ;
     }
 }
