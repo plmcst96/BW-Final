@@ -28,4 +28,6 @@ public class Invoice {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    public void setUuid(UUID uuid) {
+    }
 }
