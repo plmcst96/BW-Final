@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,5 +26,10 @@ public class ProvinceService {
         if(size >= 50) size = 50;
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return provinceDAO.findAll(pageable);
+    }
+
+
+    public Province findByName(String name) {
+       return provinceDAO.findByName(name).orElseThrow(()-> new NotFoundException("not found" + name));
     }
 }

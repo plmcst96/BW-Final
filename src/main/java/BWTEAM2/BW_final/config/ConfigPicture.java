@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
 @Configuration
 public class ConfigPicture {
 
@@ -23,4 +24,5 @@ public class ConfigPicture {
         return new Cloudinary(config);
     }
 }
+*/
 
