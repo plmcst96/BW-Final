@@ -5,15 +5,15 @@ import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/*
-@Configuration
+@Component
 public class ConfigPicture {
 
-    @Bean
+
     public Cloudinary cloudinaryUpdate(@Value("${cloudinary.name}") String name,
                                        @Value("${cloudinary.apikey}") String apikey,
                                        @Value("${cloudinary.secret}") String secret){
@@ -24,5 +24,4 @@ public class ConfigPicture {
         return new Cloudinary(config);
     }
 }
-*/
 
