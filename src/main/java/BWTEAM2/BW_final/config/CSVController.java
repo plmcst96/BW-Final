@@ -40,9 +40,15 @@ public class CSVController {
                     String municipalSerialNum = data[1];
                     String name = data[2];
                     String provinceName = data[3];
+                    if(provinceName.equals("Bolzano/Bozen")&& provinceCode.equals("021")){
+                        provinceName = "Bolzano";
+                        provinceCode = "021";
+                    }
+                    System.out.println(provinceName);
 
                     //controlla se la provincia esiste nel DB
-                    Optional<Province> provinceDB =provinceDAO.findByName(name);
+                    Optional<Province> provinceDB =provinceDAO.findByName(provinceName);
+                    //System.out.println(provinceDB);
                     if(provinceDB.isPresent()){
                         // crea istanza di Town
                         Town town = new Town();
@@ -58,7 +64,7 @@ public class CSVController {
                         //jdbcTemplate.update(sql, provinceCode, municipalSerialNum, name);
 
                     }else{
-                        System.out.println("Provincia con nome " + name + " non trovata!");
+                        System.out.println("Provincia con nome " + provinceName + " non trovata!");
                         continue; // passa alla prossima riga se la provincia non è stata trovata
                     }
                 }else{
@@ -90,6 +96,25 @@ public class CSVController {
                     province.setProvinceCode(provinceCode);
                     province.setName(name);
                     province.setRegion(region);
+                    if(name.equals("Carbonia Iglesias")  || name.equals("Medio Campidano")){
+                        province.setName("Sud Sardegna") ;
+                        province.setProvinceCode("SU");
+                    }else if(name.equals("Ogliastra")){
+                        province.setName("Nuoro");
+                        province.setProvinceCode("NU");
+                    }else if(name.equals("Olbia Tempio")){
+                        province.setName("Sassari");
+                        province.setProvinceCode("SS");
+                    }
+
+                    /*else if(name.equals("Bolzano")){
+                        province.setName("Bolzano/Bozen");
+                    }*/
+
+
+
+
+
 
                     provinceDAO.save(province);
 
