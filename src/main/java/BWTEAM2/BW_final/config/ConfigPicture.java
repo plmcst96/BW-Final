@@ -1,4 +1,4 @@
-
+/*
 package BWTEAM2.BW_final.config;
 
 import com.cloudinary.Cloudinary;
@@ -22,5 +22,5 @@ public class ConfigPicture {
         config.put("api_secret", secret);
         return new Cloudinary(config);
     }
-}
+}*/
 
