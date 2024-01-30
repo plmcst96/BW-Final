@@ -45,6 +45,7 @@ public class AuthService {
         user.setSurname(body.surname());
         user.setUsername(body.username());
         user.setEmail(body.email());
+        user.setUsername(body.username());
         user.setRole(Role.USER);
         return userDAO.save(user);
     }
