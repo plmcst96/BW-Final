@@ -17,6 +17,9 @@ import java.util.UUID;
 public class Town {
 
     @Id
+    @GeneratedValue
+    private UUID uuid;
+
     @Column(name = "municipal_serial_num")
     private String municipalSerialNumber;
     @Column(name = "name")
@@ -24,9 +27,9 @@ public class Town {
     @Column(name = "province_code")
     private String provinceCode;
 
-   @ManyToOne
-   @JoinColumn(name = "province_name")
-   private Province province;
+    @ManyToOne
+    @JoinColumn(name = "province_name")
+    private Province province;
 
     @OneToMany(mappedBy = "town", cascade = CascadeType.ALL)
     @JsonIgnore

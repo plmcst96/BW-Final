@@ -4,6 +4,8 @@ import BWTEAM2.BW_final.entities.Province;
 import BWTEAM2.BW_final.entities.Town;
 import BWTEAM2.BW_final.repositories.ProvinceDAO;
 import BWTEAM2.BW_final.repositories.TownDAO;
+import BWTEAM2.BW_final.services.ProvinceService;
+import BWTEAM2.BW_final.services.TownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,10 @@ public class CSVController {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private ProvinceDAO provinceDAO;
+    @Autowired
+    private TownService townService;
+    @Autowired
+    private ProvinceService provinceService;
 
     @Autowired
     private TownDAO townDAO;
@@ -33,6 +39,7 @@ public class CSVController {
             //legge tutte le righe del file saltando la prima con l'intestazione della tabella
             String line;
             reader.readLine();
+
             while((line = reader.readLine()) != null){// legge riga per riga
                 String[] data = line.split(";"); // ogni riga è separata da uno spazio
                 if(data.length >= 4) {
@@ -40,36 +47,35 @@ public class CSVController {
                     String municipalSerialNum = data[1];
                     String name = data[2];
                     String provinceName = data[3];
-
+                    if(provinceName.equals("Verbano-Cusio-Ossola")) provinceName = "Verbania";
+                    if(provinceName.equals("Monza e della Brianza")) provinceName = "Monza-Brianza";
+                    if(provinceName.equals("Bolzano/Bozen")) provinceName = "Bolzano";
+                    if(provinceName.equals("La Spezia")) provinceName = "La-Spezia";
+                    if(provinceName.equals("Reggio nell'Emilia")) provinceName = "Reggio-Emilia";
+                    if(provinceName.equals("Forlì-Cesena")) provinceName = "Forli-Cesena";
+                    if(provinceName.equals("Pesaro e Urbino")) provinceName = "Pesaro-Urbino";
+                    if(provinceName.equals("Ascoli Piceno")) provinceName = "Ascoli-Piceno";
+                    if(provinceName.equals("Reggio Calabria")) provinceName = "Reggio-Calabria";
+                    if(provinceName.equals("Vibo Valentia")) provinceName = "Vibo-Valentia";
+                    if(provinceName.startsWith("Valle d'Aosta")) provinceName = "Aosta";
                     //controlla se la provincia esiste nel DB
-                    Optional<Province> provinceDB;
-                    if(provinceName.equals("Bolzano")){
-                        provinceDB = provinceDAO.findByName("Bolzano/Bozen");
-                       System.out.println("Bolzano: " + provinceDB);
-                    }else{
-                       provinceDB = provinceDAO.findByName(provinceName);
-                    }
-                    //System.out.println(provinceName);
+                    Province provinceDB = provinceService.findByName(provinceName);
+                    //System.out.println("nome provincia (town) " + provinceName + " provincia DB" + provinceDB );
 
-
-                    //System.out.println(provinceDB);
-                    if(provinceDB.isPresent()){
                         // crea istanza di Town
                         Town town = new Town();
                         town.setMunicipalSerialNumber(municipalSerialNum);
                         town.setName(name);
                         town.setProvinceCode(provinceCode);
-                        town.setProvince(provinceDB.get());
+                        town.setProvince(provinceDB);
+                        System.out.println(townDAO.save(town));
+                        //System.out.println(townService.save(town));
+                        // query di inserimento dati
+                        //String sql = "INSERT INTO towns (province_code, municipal_serial_num, name) VALUES (?, ?, ?) ";
+                        //jdbcTemplate.update(sql, provinceCode, municipalSerialNum, name);
 
 
 
-                        townDAO.save(town);
-                        System.out.println("*******" + town);
-
-                    }else{
-                        System.out.println("Provincia con nome " + provinceName + " non trovata!");
-                        continue; // passa alla prossima riga se la provincia non è stata trovata
-                    }
                 }else{
                     System.out.println("Riga non valida " + line);
                 }
@@ -108,40 +114,7 @@ public class CSVController {
                     }else if(name.equals("Olbia Tempio")){
                         province.setName("Sassari");
                         province.setProvinceCode("SS");
-                    } else if(name.equals("Bolzano")){
-                        province.setName("Bolzano/Bozen");
-                        province.setProvinceCode("BZ");
-                    } else if(name.equals("Verbania")) {
-                        province.setName("Verbano-Cusio-Ossola");
-                        province.setProvinceCode("VCO");
-                    }else if(name.equals("Aosta")){
-                        province.setName("Valle d'Aosta/Vallée d'Aoste");
-                        province.setProvinceCode("AO");
-                    }else if(name.equals("Monza-Brianza")){
-                        province.setName("Monza e della Brianza");
-                        province.setProvinceCode("MB");
-                    }else if(name.equals("La-Spezia")){
-                        province.setName("La Spezia");
-                        province.setProvinceCode("SP");
-                    }else if(name.equals("Reggio-Emilia")){
-                        province.setName("Reggio nell'Emilia");
-                        province.setProvinceCode("RE");
-                    }else if(name.equals("Forli-Cesena")){
-                        province.setName("Forlì-Cesena");
-                        province.setProvinceCode("FC");
-                    }else if(name.equals("Pesaro-Urbino")) {
-                        province.setName("Pesaro e Urbino");
-                        province.setProvinceCode("PU");
-                    }else if(name.equals("Ascoli-Piceno")) {
-                        province.setName("Ascoli Piceno");
-                        province.setProvinceCode("AP");
-                    }else if(name.equals("Reggio-Calabria")) {
-                        province.setName("Reggio Calabria");
-                        province.setProvinceCode("RC");
-                    }else if(name.equals("Vibo-Valentia")) {
-                        province.setName("Vibo Valentia");
-                        province.setProvinceCode("VV");
-                    }
+                    } 
                     
                             provinceDAO.save(province);
                 }else{
