@@ -40,6 +40,7 @@ public class ClientsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    // @PreAuthorize("hasAuthority('ADMIN')")
     public ClientResponseDTO create(@RequestBody @Validated NewClientDTO device, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
@@ -51,11 +52,14 @@ public class ClientsController {
     }
 
     @PutMapping("/{id}")
+    // @PreAuthorize("hasAuthority('ADMIN')")
+
     Client updateById(@PathVariable UUID id, @RequestBody NewClientDTO body) {
         return clientsService.findByIdAndUpdate(id, body);
     }
 
     @DeleteMapping("/{id}")
+    // @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable UUID id) {
         clientsService.deleteById(id);
