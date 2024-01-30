@@ -1,13 +1,18 @@
 package BWTEAM2.BW_final.controllers;
 
+import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.entities.Invoice;
+import BWTEAM2.BW_final.entities.InvoiceState;
 import BWTEAM2.BW_final.payloads.invoice.InvoiceDTO;
 import BWTEAM2.BW_final.repositories.InvoiceDAO;
 import BWTEAM2.BW_final.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,4 +73,51 @@ public class InvoiceController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    //Filtri custom
+    @GetMapping("/filters")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Page<Invoice> findByDate(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "uuid") String sort,
+                                    @PathVariable LocalDate date){
+        return invoiceService.findByDate(page, size, sort, date);
+    }
+    @GetMapping("/filters")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Page<Invoice> findByInvoiceState(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "uuid") String sort,
+                                    @PathVariable InvoiceState invoiceState){
+        return invoiceService.findByInvoiceState(page, size, sort, invoiceState);
+    }
+
+    @GetMapping("/filters")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Page<Invoice> findByClient(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "uuid") String sort,
+                                    @PathVariable UUID client){
+        return invoiceService.findByClient(page, size, sort, client);
+    }
+
+    @GetMapping("/filters")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Page<Invoice> findByAmountRange(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "uuid") String sort,
+                                    @PathVariable double min, @PathVariable double max){
+        return invoiceService.findInvoicesByAmountRange(min, max, page, size, sort);
+    }
+
+    @GetMapping("/filters")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public Page<Invoice> findByYear(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "uuid") String sort,
+                                    @PathVariable int year){
+        return invoiceService.findByYear(page, size, sort, year);
+    }
+
+
 }

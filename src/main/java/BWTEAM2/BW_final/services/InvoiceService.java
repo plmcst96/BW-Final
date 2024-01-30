@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -85,5 +86,10 @@ public class InvoiceService {
     public Page<Invoice> findByDate(int page, int size, String orderBy, LocalDate date){
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return  invoiceDAO.findByDate(date, pageable);
+    }
+
+    public Page<Invoice> findByYear(int page, int size, String orderBy, @RequestParam int year){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return invoiceDAO.findInvoiceByYear(year, pageable);
     }
 }
