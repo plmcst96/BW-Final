@@ -1,6 +1,7 @@
 package BWTEAM2.BW_final.services;
 
 
+import BWTEAM2.BW_final.entities.Address;
 import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.entities.ClientType;
 import BWTEAM2.BW_final.exception.NotFoundException;
@@ -22,10 +23,13 @@ public class ClientsService {
 
     @Autowired
     ClientsDAO clientsDAO;
+    @Autowired
+    AddressService addressService;
 
 
-    public Client save(NewClientDTO body) {
+    public Client save(NewClientDTO body, UUID uuid) {
         Client client = new Client();
+        Address address = addressService.findById(uuid);
         client.setBusinessName(body.businessName());
         client.setVATNumber(body.VATNumber());
         client.setEmail(body.email());
@@ -41,6 +45,8 @@ public class ClientsService {
         client.setName(body.name());
         client.setSurname(body.surname());
         client.setContactEmail(body.contactEmail());
+        client.setLegalAddress(address);
+        client.setOperativeAddress(address);
 
         return clientsDAO.save(client);
     }

@@ -27,12 +27,12 @@ public class ClientsController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ClientResponseDTO create(@RequestBody @Validated NewClientDTO device, BindingResult validation) {
+    public ClientResponseDTO create(@RequestBody @Validated NewClientDTO device, UUID uuid, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
             throw new BadRequestException("Something is wrong in the payload.");
         } else {
-            Client newDevice = clientsService.save(device);
+            Client newDevice = clientsService.save(device, uuid);
             return new ClientResponseDTO(newDevice.getUuid());
         }
     }

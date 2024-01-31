@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record NewClientDTO(
         @NotEmpty(message = "Business name cannot be empty.")
@@ -39,6 +40,10 @@ public record NewClientDTO(
         @NotEmpty(message = "Name cannot be empty.")
         @Size(min = 3, max = 20, message = "The name must have a minimum of 3 characters and a maximum of 20.")
         String name,
+        @NotEmpty(message = "Legal address cannot be empty.")
+        UUID legalAddress,
+        @NotEmpty(message = "Operative address cannot be empty.")
+        UUID operativeAddress,
         @NotEmpty(message = "Surname cannot be empty.")
         @Size(min = 3, max = 20, message = "The surname must have a minimum of 3 characters and a maximum of 20.")
         String surname,
