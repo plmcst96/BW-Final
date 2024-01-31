@@ -2,7 +2,9 @@ package BWTEAM2.BW_final.services;
 
 
 import BWTEAM2.BW_final.entities.Address;
+import BWTEAM2.BW_final.entities.Town;
 import BWTEAM2.BW_final.exception.NotFoundException;
+import BWTEAM2.BW_final.repositories.TownDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,8 @@ import java.util.UUID;
 public class AddressService {
     @Autowired
     AddressRepo addressRepo;
+    @Autowired
+    TownService townService;
 
     public Address save(AddressDTO body) {
         Address address = new Address();
@@ -41,10 +45,12 @@ public class AddressService {
 
     public Address updateById(UUID id, AddressDTO body) {
         Address address = addressRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
+        Town town = townService.findById(id);
         address.setStreet(body.street());
         address.setStreetNumber(body.streetNumber());
         address.setDistrict(body.district());
         address.setZipCode(body.zipCode());
+        address.setTown(town);
         return addressRepo.save(address);
     }
 
