@@ -38,7 +38,8 @@ public class InvoiceService {
 
     public Invoice saveInvoice(InvoiceDTO body) {
         Invoice invoice = new Invoice();
-        invoice.setDate(body.date());
+        invoice.setDate(LocalDate.parse(body.date()));
+
         invoice.setAmount(body.amount());
         invoice.setNumber(body.number());
         invoice.setInvoiceState(InvoiceState.valueOf(body.invoiceState()));
@@ -54,7 +55,7 @@ public class InvoiceService {
 
     public Invoice updateInvoiceById(UUID uuid, InvoiceDTO body) {
         Invoice invoice = invoiceDAO.findById(uuid).orElseThrow(() -> new NotFoundException(uuid));
-        invoice.setDate(body.date());
+        invoice.setDate(LocalDate.parse(body.date()));
         invoice.setAmount(body.amount());
         invoice.setNumber(body.number());
         invoice.setInvoiceState(InvoiceState.valueOf(body.invoiceState()));
