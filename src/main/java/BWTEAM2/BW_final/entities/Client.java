@@ -46,10 +46,10 @@ public class Client {
     @JsonIgnore
     @ToString.Exclude
     private List<Invoice> invoices;
-    @OneToMany(mappedBy = "client")
-    @JsonIgnore
-    @ToString.Exclude
-    private List<Address> addresses;
+    @OneToOne(mappedBy = "client")
+    private Address legalAddress;
+    @OneToOne(mappedBy = "client")
+    private Address operativeAddress;
 
 
 }
