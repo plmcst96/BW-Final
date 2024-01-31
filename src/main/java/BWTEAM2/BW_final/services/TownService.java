@@ -29,6 +29,10 @@ public class TownService {
         return townDAO.findAll(pageable);
     }
 
+    public Town findByName(String name){
+        return townDAO.findByName(name).orElseThrow(() -> new NotFoundException("Address not found"));
+    }
+
 
 
 }

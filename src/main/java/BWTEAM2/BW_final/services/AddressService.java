@@ -4,7 +4,6 @@ package BWTEAM2.BW_final.services;
 import BWTEAM2.BW_final.entities.Address;
 import BWTEAM2.BW_final.entities.Town;
 import BWTEAM2.BW_final.exception.NotFoundException;
-import BWTEAM2.BW_final.repositories.TownDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,12 +24,14 @@ public class AddressService {
     @Autowired
     TownService townService;
 
-    public Address save(AddressDTO body) {
+    public Address save(AddressDTO body, String name) {
         Address address = new Address();
+       Town town = townService.findByName(name);
         address.setStreet(body.street());
         address.setStreetNumber(body.streetNumber());
         address.setDistrict(body.district());
         address.setZipCode(body.zipCode());
+        address.setTown(town);
         return addressRepo.save(address);
     }
 
@@ -43,14 +44,13 @@ public class AddressService {
         return addressRepo.findAll(pageable);
     }
 
-    public Address updateById(UUID id, AddressDTO body) {
+    public Address updateById(UUID  id , AddressDTO body) {
         Address address = addressRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
-        Town town = townService.findById(id);
+
         address.setStreet(body.street());
         address.setStreetNumber(body.streetNumber());
         address.setDistrict(body.district());
         address.setZipCode(body.zipCode());
-        address.setTown(town);
         return addressRepo.save(address);
     }
 
