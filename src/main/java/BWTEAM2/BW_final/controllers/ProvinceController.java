@@ -15,14 +15,14 @@ public class ProvinceController {
     private ProvinceService provinceService;
 
     @GetMapping("/{id}")
-    public Province findProvinceById(@PathVariable UUID id){
-        return provinceService.findById(id);
+    public Province findProvinceByName(@PathVariable String name){
+        return provinceService.findByName(name);
     }
 
     @GetMapping
     public Page<Province> findAllProvinces(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "10") int size,
-                                      @RequestParam(defaultValue = "uuid") String orderBy){
+                                      @RequestParam(defaultValue = "name") String orderBy){
         return provinceService.findAllProvinces(page, size, orderBy);
     }
 }

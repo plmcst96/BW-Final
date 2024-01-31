@@ -18,9 +18,9 @@ public class ProvinceService {
     @Autowired
     private ProvinceDAO provinceDAO;
 
-    public Province findById(UUID id){
+   /* public Province findById(String id){
         return provinceDAO.findById(id).orElseThrow(()-> new NotFoundException(id));
-    }
+    }*/
 
     public Page<Province> findAllProvinces(int page, int size, String orderBy){
         if(size >= 50) size = 50;
