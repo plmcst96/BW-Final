@@ -27,9 +27,10 @@ public class ClientsService {
     AddressService addressService;
 
 
-    public Client save(NewClientDTO body, UUID uuid) {
+    public Client save(NewClientDTO body) {
         Client client = new Client();
-        Address address = addressService.findById(uuid);
+        Address address1 = addressService.findById(body.legalAddress());
+        Address address2 = addressService.findById(body.operativeAddress());
         client.setBusinessName(body.businessName());
         client.setVATNumber(body.VATNumber());
         client.setEmail(body.email());
@@ -45,8 +46,8 @@ public class ClientsService {
         client.setName(body.name());
         client.setSurname(body.surname());
         client.setContactEmail(body.contactEmail());
-        client.setLegalAddress(address);
-        client.setOperativeAddress(address);
+        client.setLegalAddress(address1);
+        client.setOperativeAddress(address2);
 
         return clientsDAO.save(client);
     }

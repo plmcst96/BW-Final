@@ -12,6 +12,7 @@ import BWTEAM2.BW_final.repositories.InvoiceDAO;
 import BWTEAM2.BW_final.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,12 +33,12 @@ public class InvoiceController {
     @Autowired
     private InvoiceDAO invoiceDAO;
 
-    @GetMapping
+   /* @GetMapping
     public Page<Invoice> getInvoices(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size,
                                    @RequestParam(defaultValue = "uuid") String sort) {
         return invoiceService.getAllInvoices(page, size, sort);
-    }
+    }*/
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -112,4 +113,17 @@ public class InvoiceController {
         return invoiceService.findByYear(page, size, sort, year);
     }
 
+    @GetMapping
+    public Page<Invoice> getInvoices(@RequestParam(required = false) Double minAmount,
+                                     @RequestParam(required = false) Double maxAmount,
+                                     @RequestParam(required = false,  value = "date")
+                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                    @RequestParam(required = false) String pec,
+                                    @RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "10") int size,
+                                     @RequestParam(defaultValue = "uuid") String sort) {
+        return invoiceService.findByParams(minAmount, maxAmount, date, pec ,page, size, sort);
+
+
+}
 }

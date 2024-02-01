@@ -94,4 +94,11 @@ public class InvoiceService {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return invoiceDAO.findInvoiceByYear(year, pageable);
     }
+
+    public Page<Invoice> findByParams(double minAmount, double maxAmount, LocalDate date, String pec,
+                                      int page, int size, String orderBy){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return invoiceDAO.findByParams(minAmount, maxAmount, date, pec, pageable);
+
+    }
 }
