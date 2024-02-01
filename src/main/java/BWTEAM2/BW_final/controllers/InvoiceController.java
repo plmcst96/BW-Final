@@ -116,14 +116,11 @@ public class InvoiceController {
     @GetMapping
     public Page<Invoice> getInvoices(@RequestParam(required = false) Double minAmount,
                                      @RequestParam(required = false) Double maxAmount,
-                                     @RequestParam(required = false,  value = "date")
-                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                     @RequestParam(required = false) InvoiceState invoiceState,
                                     @RequestParam(required = false) String pec,
                                     @RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size,
                                      @RequestParam(defaultValue = "uuid") String sort) {
-        return invoiceService.findByParams(minAmount, maxAmount, date, pec ,page, size, sort);
-
-
-}
+        return invoiceService.findByParams(minAmount, maxAmount, invoiceState, pec ,page, size, sort);
+    }
 }

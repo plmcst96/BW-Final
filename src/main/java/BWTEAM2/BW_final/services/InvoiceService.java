@@ -38,8 +38,7 @@ public class InvoiceService {
 
     public Invoice saveInvoice(InvoiceDTO body) {
         Invoice invoice = new Invoice();
-        invoice.setDate(LocalDate.parse(body.date()));
-
+        invoice.setDate(body.date());
         invoice.setAmount(body.amount());
         invoice.setNumber(body.number());
         invoice.setInvoiceState(InvoiceState.valueOf(body.invoiceState()));
@@ -55,7 +54,7 @@ public class InvoiceService {
 
     public Invoice updateInvoiceById(UUID uuid, InvoiceDTO body) {
         Invoice invoice = invoiceDAO.findById(uuid).orElseThrow(() -> new NotFoundException(uuid));
-        invoice.setDate(LocalDate.parse(body.date()));
+        invoice.setDate(body.date());
         invoice.setAmount(body.amount());
         invoice.setNumber(body.number());
         invoice.setInvoiceState(InvoiceState.valueOf(body.invoiceState()));
@@ -95,10 +94,10 @@ public class InvoiceService {
         return invoiceDAO.findInvoiceByYear(year, pageable);
     }
 
-    public Page<Invoice> findByParams(double minAmount, double maxAmount, LocalDate date, String pec,
+    public Page<Invoice> findByParams(Double minAmount, Double maxAmount,InvoiceState invoiceState, String pec,
                                       int page, int size, String orderBy){
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-        return invoiceDAO.findByParams(minAmount, maxAmount, date, pec, pageable);
+        return invoiceDAO.findByParams(minAmount, maxAmount, invoiceState, pec, pageable);
 
     }
 }
