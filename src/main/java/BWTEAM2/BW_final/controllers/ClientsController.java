@@ -26,7 +26,7 @@ public class ClientsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    // @PreAuthorize("hasAuthority('ADMIN')")
     public ClientResponseDTO create(@RequestBody @Validated NewClientDTO device, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
@@ -45,7 +45,7 @@ public class ClientsController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public void deleteById(@PathVariable UUID id) {
         clientsService.deleteById(id);
     }
