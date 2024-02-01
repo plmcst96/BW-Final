@@ -59,14 +59,14 @@ public class ClientsController {
     public Page<Client> getClients(
             @RequestParam(required = false) Double minRevenue,
             @RequestParam(required = false) Double maxRevenue,
+            @RequestParam(required = false) String businessName,
             @RequestParam(required = false, value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inputDate,
             @RequestParam(required = false, value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastContactDate,
-            @RequestParam(required = false) String businessName,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "uuid") String sort) {
 
-        return clientsService.getClientsByParams(minRevenue, maxRevenue, inputDate, lastContactDate, businessName, page,size,sort);
+        return clientsService.getClientsByParams(minRevenue, maxRevenue, businessName,inputDate, lastContactDate, page,size,sort);
     }
 
 

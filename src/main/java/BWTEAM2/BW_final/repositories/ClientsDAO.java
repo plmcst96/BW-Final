@@ -30,15 +30,15 @@ public interface ClientsDAO extends JpaRepository<Client, UUID> {
     @Query("SELECT c FROM Client c WHERE " +
             "(:minRevenue IS NULL OR c.annualRevenue > :minRevenue) AND " +
             "(:maxRevenue IS NULL OR c.annualRevenue < :maxRevenue) AND " +
+            "(:businessName IS NULL OR LOWER(c.businessName) LIKE LOWER(CONCAT('%', :businessName, '%'))) AND " +
             "(:inputDate IS NULL OR c.inputDate = :inputDate) AND " +
-            "(:lastContactDate IS NULL OR c.lastContactDate = :lastContactDate) AND " +
-            "(:businessName IS NULL OR c.businessName LIKE %:businessName%)")
+            "(:lastContactDate IS NULL OR c.lastContactDate = :lastContactDate)")
     public Page<Client> findByParams(
             @Param("minRevenue") Double minRevenue,
             @Param("maxRevenue") Double maxRevenue,
+            @Param("businessName") String businessName,
             @Param("inputDate") LocalDate inputDate,
             @Param("lastContactDate") LocalDate lastContactDate,
-            @Param("businessName") String businessName,
             Pageable pageable);
 
 }
