@@ -49,12 +49,12 @@ public class AddressController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     //@PreAuthorize("hasAuthority('ADMIN')")
-    public AddressResponseDTO create(@RequestBody @Validated AddressDTO address, BindingResult validation, String name) {
+    public AddressResponseDTO create(@RequestBody @Validated AddressDTO address, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
             throw new BadRequestException("Something is wrong in the payload.");
         } else {
-            Address newAddress = addressService.save(address, name);
+            Address newAddress = addressService.save(address);
             return new AddressResponseDTO(newAddress.getUuid());
         }
     }

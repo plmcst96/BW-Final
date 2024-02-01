@@ -24,9 +24,9 @@ public class AddressService {
     @Autowired
     TownService townService;
 
-    public Address save(AddressDTO body, String name) {
+    public Address save(AddressDTO body) {
         Address address = new Address();
-       Town town = townService.findByName(name);
+        Town town = townService.findByName(body.nameTown());
         address.setStreet(body.street());
         address.setStreetNumber(body.streetNumber());
         address.setDistrict(body.district());

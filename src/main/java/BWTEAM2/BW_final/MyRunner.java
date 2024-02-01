@@ -14,6 +14,8 @@ public class MyRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Hello");
 
+        System.out.println(townService.findByName("Torino"));
+
     }
 
 
