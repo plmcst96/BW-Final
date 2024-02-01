@@ -4,16 +4,21 @@ package BWTEAM2.BW_final.services;
 import BWTEAM2.BW_final.entities.Address;
 import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.entities.ClientType;
+import BWTEAM2.BW_final.entities.User;
 import BWTEAM2.BW_final.exception.NotFoundException;
 import BWTEAM2.BW_final.payloads.client.NewClientDTO;
 import BWTEAM2.BW_final.repositories.ClientsDAO;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +30,9 @@ public class ClientsService {
     ClientsDAO clientsDAO;
     @Autowired
     AddressService addressService;
+
+    @Autowired
+    Cloudinary cloudinary;
 
 
     public Client save(NewClientDTO body) {
@@ -92,6 +100,14 @@ public class ClientsService {
         Pageable pageable = PageRequest.of(page,size, Sort.by(orderBy));
 
         return clientsDAO.findByParams(minRevenue, maxRevenue, inputDate, lastContactDate, businessName, pageable);
+    }
+
+    public String uploadPicture(UUID id, MultipartFile file) throws IOException {
+        Client user = clientsDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
+        String url = (String) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        user.setLogo(url);
+        clientsDAO.save(user);
+        return url;
     }
 
 

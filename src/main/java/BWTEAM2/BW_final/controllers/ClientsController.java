@@ -13,7 +13,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -67,6 +69,11 @@ public class ClientsController {
             @RequestParam(defaultValue = "uuid") String sort) {
 
         return clientsService.getClientsByParams(minRevenue, maxRevenue, inputDate, lastContactDate, businessName, page,size,sort);
+    }
+
+    @PostMapping("/{id}/logo")
+    public String uploadExample(@PathVariable UUID id, @RequestParam("logo") MultipartFile body) throws IOException {
+        return clientsService.uploadPicture(id, body);
     }
 
 
