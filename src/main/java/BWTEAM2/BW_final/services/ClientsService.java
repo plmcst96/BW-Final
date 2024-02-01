@@ -39,6 +39,7 @@ public class ClientsService {
         Client client = new Client();
         Address address1 = addressService.findById(body.legalAddress());
         Address address2 = addressService.findById(body.operativeAddress());
+        System.out.println(address1 + "sono un address");
         client.setBusinessName(body.businessName());
         client.setVATNumber(body.VATNumber());
         client.setEmail(body.email());

@@ -46,9 +46,13 @@ public class Client {
     @JsonIgnore
     @ToString.Exclude
     private List<Invoice> invoices;
-    @OneToOne(mappedBy = "client")
+    @OneToOne
+    @JoinColumn(name = "address_id")
+
     private Address legalAddress;
-    @OneToOne(mappedBy = "client")
+    @OneToOne
+    @JoinColumn(name = "operativeAddress_id")
+
     private Address operativeAddress;
 
 
