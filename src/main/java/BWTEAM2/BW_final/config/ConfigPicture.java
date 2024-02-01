@@ -10,10 +10,11 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Configuration
 public class ConfigPicture {
 
 
+    @Bean
     public Cloudinary cloudinaryUpdate(@Value("${cloudinary.name}") String name,
                                        @Value("${cloudinary.apikey}") String apikey,
                                        @Value("${cloudinary.secret}") String secret){

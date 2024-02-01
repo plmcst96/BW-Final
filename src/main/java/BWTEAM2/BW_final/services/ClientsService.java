@@ -32,7 +32,7 @@ public class ClientsService {
     AddressService addressService;
 
     @Autowired
-    Cloudinary cloudinary;
+    private Cloudinary cloudinary;
 
 
     public Client save(NewClientDTO body) {
