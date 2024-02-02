@@ -48,7 +48,7 @@ public class AddressController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public AddressResponseDTO create(@RequestBody @Validated AddressDTO address, BindingResult validation) {
         if(validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
