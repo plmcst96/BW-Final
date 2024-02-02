@@ -1,15 +1,19 @@
 package BWTEAM2.BW_final.controllers;
 
+import BWTEAM2.BW_final.config.EmailSender;
 import BWTEAM2.BW_final.entities.Client;
 import BWTEAM2.BW_final.exception.BadRequestException;
 import BWTEAM2.BW_final.payloads.client.ClientResponseDTO;
 import BWTEAM2.BW_final.payloads.client.NewClientDTO;
+import BWTEAM2.BW_final.payloads.email.EmailDTO;
 import BWTEAM2.BW_final.services.ClientsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +28,8 @@ import java.util.UUID;
 public class ClientsController {
     @Autowired
     ClientsService clientsService;
-
+    @Autowired
+    EmailSender emailSender;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -76,6 +81,9 @@ public class ClientsController {
         return clientsService.uploadPicture(id, body);
     }
 
-
-
+    @PostMapping("/sendmail/{id}")
+    public void sendMail(@PathVariable UUID id, @RequestBody EmailDTO emailDTO) {
+         Client client = clientsService.findById(id);
+        emailSender.sendRegistrationEmail(client, emailDTO);
+    }
 }
