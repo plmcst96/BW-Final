@@ -46,11 +46,12 @@ public class AddressService {
 
     public Address updateById(UUID  id , AddressDTO body) {
         Address address = addressRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
-
+        Town town = townService.findByName(body.nameTown());
         address.setStreet(body.street());
         address.setStreetNumber(body.streetNumber());
         address.setDistrict(body.district());
         address.setZipCode(body.zipCode());
+        address.setTown(town);
         return addressRepo.save(address);
     }
 
