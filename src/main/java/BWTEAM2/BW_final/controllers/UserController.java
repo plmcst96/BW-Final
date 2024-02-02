@@ -67,14 +67,14 @@ public class UserController {
 
     @GetMapping("/{uuid}/set-admin")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public User setAdmin(@PathVariable UUID id) {
-        return usersService.setAdmin(id);
+    public User setAdmin(@PathVariable UUID uuid) {
+        return usersService.setAdmin(uuid);
     }
 
     @GetMapping("/{uuid}/set-user")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public User setUser(@PathVariable UUID id) {
-        return usersService.setUser(id);
+    public User setUser(@PathVariable UUID uuid) {
+        return usersService.setUser(uuid);
     }
 
     @PostMapping("/{id}/avatar")
