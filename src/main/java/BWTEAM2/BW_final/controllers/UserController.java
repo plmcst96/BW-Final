@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/avatar")
-    public String uploadExample(@PathVariable UUID id, @RequestParam("avatar") MultipartFile body) throws IOException {
-        return usersService.uploadPicture(id, body);
+    public String uploadExample(@PathVariable UUID uuid, @RequestParam("avatar") MultipartFile body) throws IOException {
+        return usersService.uploadPicture(uuid, body);
     }
 }

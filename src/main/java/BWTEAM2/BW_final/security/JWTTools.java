@@ -14,8 +14,11 @@ public class JWTTools {
     @Value("${spring.jwt.secret}")
     private String secret;
 
+
     public String createToken(User user){
+        String role = String.valueOf(user.getRole());
         return Jwts.builder().subject(String.valueOf(user.getUuid()))
+                .claim("role", role)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
