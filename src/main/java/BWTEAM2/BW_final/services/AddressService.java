@@ -58,6 +58,7 @@ public class AddressService {
     public void deleteById(UUID id) {
         Address address = addressRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
         addressRepo.delete(address);
+
     }
 
 
