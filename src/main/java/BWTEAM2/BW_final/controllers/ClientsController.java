@@ -82,6 +82,7 @@ public class ClientsController {
     }
 
     @PostMapping("/sendmail/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void sendMail(@PathVariable UUID id, @RequestBody EmailDTO emailDTO) {
          Client client = clientsService.findById(id);
         emailSender.sendRegistrationEmail(client, emailDTO);
